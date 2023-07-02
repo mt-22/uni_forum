@@ -1,0 +1,1 @@
+export const uPostLogo = './media/uPost.svg'

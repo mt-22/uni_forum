@@ -1,0 +1,18 @@
+.post-page-wrapper {
+    display: flex;
+    background-color: white;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 0;
+    padding-bottom: 4rem;
+}
+
+.comment-wall {
+    padding-left: 1rem;
+    margin-left: 1px;
+    border-left: 1px solid white;
+}
+
+.comment-wall-max {
+    padding-left: 0;
+}

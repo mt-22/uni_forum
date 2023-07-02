@@ -1,0 +1,88 @@
+
+.forum-page-info {
+    width: 80%;
+    margin: 5rem 0;
+    display: flex;
+    flex-direction: column;
+    flex: 5rem;
+    justify-self: left
+}
+
+.pending-btn {
+    color: var(--jet);
+}
+.pending-btn:hover {
+    color: var(--red);
+    text-decoration: underline;
+}
+
+.back-btn {
+    width: 80%;
+    margin-top: 1rem;
+}
+
+.back-btn a {
+    color: var(--jet);
+}
+.back-btn a:hover {
+    text-decoration: underline;
+    color: var(--red);
+}
+
+.forum-name-users {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.forum-name  {
+    font-family: "Lato";
+}
+
+
+.forum-follow-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-left: 2rem;
+    align-items: center;
+}
+
+.forum-follow-wrapper * {
+    margin: 0 0.25rem;
+    font-family: 'Heebo';
+}
+
+.makepost {
+    margin: 2rem 0;
+}
+
+#private-btn-wrapper {
+    height: 30px;
+    width: 60px;
+    border-radius: 15px;
+    background-color: var(--jet);
+    position: relative;
+}
+
+.private-btn-front {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: var(--grey);
+    position: absolute;
+    left: 0;
+    transition: left 0.15s, background-color 0.2s;
+}
+.private-btn-right {
+    left:50%;    
+    background-color: var(--red);
+    transition: left 0.15s, background-color 0.2s;
+}
+
+#private-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 120px;
+}

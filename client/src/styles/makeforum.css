@@ -1,0 +1,23 @@
+.make-forum-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height:3rem;
+    width:60%;
+}
+
+.make-forum-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height:100%;
+    width:100%;
+}
+
+.make-forum-input input {
+    height: 100%;
+    width: 100%;
+    font-family: 'Lato';
+    font-size: 18pt;
+    margin: 0 0.5rem;
+}

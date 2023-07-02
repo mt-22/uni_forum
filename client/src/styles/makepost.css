@@ -1,0 +1,63 @@
+.makepost {
+    height: fit-content;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.makepost-form-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.makepost-body {
+    height: fit-content;
+    min-height: 12rem;
+    max-height:40rem;
+    resize: vertical;
+    font-family: 'Heebo';
+}
+:not(.makecomment-body).makepost-body {
+    border-top: none;
+}
+
+.makepost-title {
+    font-family: 'Lato';
+    resize: none;
+    max-lines: 1;
+}
+
+.makepost-input {
+    width:100%;
+    padding: 0.5rem;
+}
+
+.create-post-head {
+    font-family: 'Lato';
+    font-size: 1.5rem;
+}
+
+.makepost-toggle {
+    width: 75px;
+}
+.makepost-submit {
+    width: 75px;
+}
+
+.makepost-file-input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    width: 100px;
+    background-color: var(--grey);
+    color: white;
+}
+.makecomment-file-wrapper {
+    background-color: white;
+    color: black;
+}
+.makepost-file-input-wrapper:hover {
+    cursor:pointer;
+}

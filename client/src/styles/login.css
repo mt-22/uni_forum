@@ -1,0 +1,121 @@
+/* @font-face {
+    font-family: 'Heebo';
+    src: local('Heebo'), url('../media/fonts/Heebo/Heebo-VariableFont_wght.ttf') format('truetype supports variations'),
+    url('../media/fonts/Heebo/Heebo-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 300 800;
+} */
+/* 
+.page {
+    width: 100%;
+    display: block;
+    height: 100%;
+} */
+
+/* .body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: block;
+} */
+
+.front-wrapper {
+    bottom: 1rem;
+    background-color: #2D2D2A;
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 8rem 0;
+}
+
+.cred-wrapper {
+    width: 75%;
+    background-color: white;
+    margin: 0 auto;
+    display: flex;
+    position: relative;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    position: relative;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.input-wrapper button {width: fit-content}
+
+.input-cover {
+    width: 50%;
+    background-color: #E6E3DD;
+    z-index: 5;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left:50%;
+    transition: left 0.25s;
+    justify-content: center;
+}
+
+.right-cover {
+    left: 0;
+    transition: left 0.25s;
+}
+
+.cover-text {
+    align-self: center;
+    margin-bottom: 15rem;
+    font-size: 120pt;
+    font-family: 'Lato';
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 2.5rem 0;
+    font-family: 'Heebo';
+    font-weight: 300;
+}
+
+.input-field label {
+    font-size: 14pt;
+    color: #101010;
+}
+
+.input-field input {
+    margin-top: 0.5rem;
+    height: 2rem;
+    border: 1px solid #BBBBBB;
+    padding-left: 0.5rem;
+}
+
+.toggle-btn {
+    margin-top: 5rem;
+    height: 30px;
+    padding: 0 2rem;
+    font-weight: 500;
+    font-size: 10pt;
+}
+
+.form-wrapper {
+    width: 60%;
+}
+
+.submit-btn {
+    height: 45px;
+    padding: 0 2rem;
+    font-size: 11pt;
+    font-weight: 500;
+}
+
+.upost-logo {
+    height: 100px;
+}

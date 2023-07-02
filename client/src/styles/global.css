@@ -1,0 +1,67 @@
+html, body, #root {
+    margin:0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overscroll-behavior: none;
+    background-color: #E6E3DD;
+    --red: #C14953;
+    --darkred: #b0444d;
+    --darkerred: #9f3d45;
+    --jet: #2D2D2A;
+    --grey: #4C4C47;
+    --blue: #848FA5;
+    --darkblue: #788298;
+    --darkerblue: #70798c;
+    --bone: #E5DCC5;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.red-btn {
+    background-color: var(--red);
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-size: 11pt;
+    font-weight: 500;
+}
+.red-btn:focus-visible {
+    background-color: var(--darkred);
+}
+.red-btn:hover {
+    background-color: var(--darkred);
+    cursor: pointer;
+}
+:not(.btn-check)+.red-btn:active {
+    background-color: var(--darkerred);
+}
+
+.blue-btn {
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    border-radius: 4px;
+    font-family: 'Heebo';
+}
+.blue-btn:hover {
+    background-color: var(--darkblue);
+    border:none;
+    cursor: pointer;
+}
+.blue-btn:focus-visible {
+    background-color: var(--darkblue);
+}
+:not(.btn-check)+.blue-btn:active {
+    background-color: var(--darkerblue);
+}
+
+a {
+    text-decoration: none;
+}
+
+input:focus-visible {
+    outline: none;
+}
