@@ -4,6 +4,7 @@ import httpClient, { hostURL } from '../../httpClient';
 import { BlankPost } from '../../types';
 import '../../styles/post.css'
 import MakeComment from './MakeComment';
+import { ReactComponent as UpArrow } from '../../media/up_arrow.svg';
 
 
 const Post = ({
@@ -37,8 +38,12 @@ const Post = ({
             <>{postInfo.media_link && <img className='post-image' src={postInfo.media_link}/>}</>
         </div>
         <div className='post-like-wrapper'>
-            <p className="post-likes">Likes: {likeCount}</p>
-            <button className="post-like-btn" onClick={() => add_like()}>Like</button>
+            {/* <button className="post-like-btn" onClick={() => add_like()}>Like</button> */}
+            <UpArrow
+            onClick={() => add_like()}
+            className={"like-arrow " + (isLiked ? "arrow-liked" : "arrow-unliked")}
+            />
+            <p className="post-likes">{likeCount}</p>
         </div>
     </>
   )

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import httpClient from '../../httpClient';
+import { thumbsUp } from '../../images';
 
 const hostURL = "//localhost:5000/"
 
@@ -26,7 +27,8 @@ const PostLike = ({likes, id, liked}:any) => {
   return (
     <div key={id}>
         <p>Likes: {likeCount}</p>
-        <button onClick={() => add_like()}>Like</button>
+        {/* <button onClick={() => add_like()}>Like</button> */}
+        <img src={thumbsUp}/>
     </div>
   )
 }

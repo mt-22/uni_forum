@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom'
 import httpClient from '../../httpClient';
 
@@ -39,13 +40,12 @@ const SubForum = ({
     }
 
   return (
-    <div key={forum.id}>
-        <a href={`/users/${forum.user}`}><p>{forum.user}</p></a>
-        <Link to={`/forums/${params.university}/${forum.id}`}>
-            <h1>{forum.title}</h1>
+    <div key={forum.id} className="search-forum-wrapper">
+        <Link to={`/forums/${params.university}/${forum.id}`} className='search-forum-link'>
+            <h1>{`${params.university}/${forum.title}`}</h1>
         </Link>
-        <p>{followCount} Users</p>
-        <button onClick={() => follow()}>Join</button>
+        <p className='search-forum-usercount'>{followCount} Users</p>
+        <Button className="red-btn" onClick={() => follow()}>Join</Button>
     </div>
   )
 }

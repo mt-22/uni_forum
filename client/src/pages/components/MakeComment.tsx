@@ -6,6 +6,7 @@ import '../../styles/makepost.css';
 import imageCompression from 'browser-image-compression';
 
 import { hostURL } from '../../httpClient';
+import { Button } from 'react-bootstrap';
 
 const MakeComment:React.FC<{func:Function, commentOn:string}> = ({func, commentOn}) => {
   const [body, setBody] = useState("");
@@ -35,8 +36,6 @@ const MakeComment:React.FC<{func:Function, commentOn:string}> = ({func, commentO
                     "media": resp.data.fileid
             }); 
             func(postresp.data)
-            setBody("");
-            setLoading(false)
           } else{
               setLoading(true)
               const resp = await httpClient.post(hostURL + 'makecomment', {
@@ -46,11 +45,13 @@ const MakeComment:React.FC<{func:Function, commentOn:string}> = ({func, commentO
                 "subforum": params.subforum,
                 "university": params.university,
             });
+              console.log(resp.data.body, resp.data.comment_on)
             func(resp.data)
-            setBody("");
-            setLoading(false)
             }
             setMedia(undefined)
+            setBody("");
+            setLoading(false)
+            setFileName("")
         } catch (error: any) {
             console.log(error)
         }
@@ -58,15 +59,14 @@ const MakeComment:React.FC<{func:Function, commentOn:string}> = ({func, commentO
 } 
 
   const selectFile = (e:any) => {
-    const ext = e.target.files[0].name.split('.').pop();
+    const ext = e.target.files[0].name.split('.').pop().toLowerCase();
     const validext = ['jpg', 'jpeg', 'gif', 'png']
     for (let i=0; i <= validext.length; i++) {
       if (ext === validext[i]) {
-        console.log(ext);
-        setFileName(e.target.files.name)
+        setFileName(e.target.files[0].name)
         const compress = async() => {
           try {
-            const compressed = await imageCompression(e.target.files[0], {maxSizeMB:0.1})
+            const compressed = await imageCompression(e.target.files[0], {maxSizeMB:0.05, maxWidthOrHeight:800})
             setMedia(compressed)
           } catch(error) {console.log(error)}
         } 
@@ -75,7 +75,8 @@ const MakeComment:React.FC<{func:Function, commentOn:string}> = ({func, commentO
         return;
       }
     }
-    console.log('wrong file type')
+    console.log('wrong file type', ext)
+
   }
   return (
     <div className='makepost'>
@@ -97,8 +98,9 @@ const MakeComment:React.FC<{func:Function, commentOn:string}> = ({func, commentO
             />
             Choose File
           </label>
-          {!isLoading? <button disabled={false} className="makepost-submit" type="button" onClick={() => submit()}>Submit</button>:
-            <button disabled={true} className="makepost-submit" type="button">Submit</button>}
+          <p>{fileName}</p>
+          {!isLoading? <Button disabled={false} className="makepost-submit red-btn" onClick={() => submit()}>Submit</Button>:
+            <Button disabled={true} className="makepost-submit red-btn">Submit</Button>}
       </div>
     </div>
   )

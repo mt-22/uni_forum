@@ -4,6 +4,7 @@ import validator from 'validator';
 import { useParams } from 'react-router-dom';
 import '../../styles/makeforum.css'
 import { hostURL } from '../../httpClient';
+import { Button } from 'react-bootstrap';
 
 const MakeSubForum: React.FC<{func?: Function}> = ({func}) => {
     const [title, setTitle] = useState(String)
@@ -49,7 +50,8 @@ const MakeSubForum: React.FC<{func?: Function}> = ({func}) => {
                     />
                 </div>
                 <div className='make-forum-button-wrapper'>
-                    <button type="button" onClick={() => submitPost()}>Submit</button>
+                    {/* <button type="button" onClick={() => submitPost()}>Submit</button> */}
+                    <Button className="red-btn" onClick={() => submitPost()}>Submit</Button>
                 </div>
         </div>
   )

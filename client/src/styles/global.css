@@ -15,6 +15,9 @@ html, body, #root {
     --darkerblue: #70798c;
     --bone: #E5DCC5;
 }
+textarea:focus-visible {
+    outline: none;
+}
 
 input[type="file"] {
     display: none;
@@ -28,8 +31,14 @@ input[type="file"] {
     font-size: 11pt;
     font-weight: 500;
 }
+.red-btn:disabled {
+    background-color: var(--darkerred);
+}
 .red-btn:focus-visible {
     background-color: var(--darkred);
+}
+.red-btn:active {
+    background-color: var(--darkerred)!important;
 }
 .red-btn:hover {
     background-color: var(--darkred);

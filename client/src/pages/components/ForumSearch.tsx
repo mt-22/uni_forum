@@ -39,7 +39,7 @@ const ForumSearch = () => {
     })
 
     const search = () => {
-        if (searchTerm.length > 0){
+        if (searchTerm.length > 0 && autoResults.length > 0){
             window.location.href = `/search/forums/${params.university}/${searchTerm}`
         }
     }

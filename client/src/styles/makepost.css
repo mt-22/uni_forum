@@ -40,9 +40,12 @@
 
 .makepost-toggle {
     width: 75px;
+    margin-top: 1rem;
 }
 .makepost-submit {
     width: 75px;
+    margin-right: 1rem;
+    margin-top: 1rem;
 }
 
 .makepost-file-input-wrapper {

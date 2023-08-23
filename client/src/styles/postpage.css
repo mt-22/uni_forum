@@ -1,18 +1,36 @@
 .post-page-wrapper {
     display: flex;
-    background-color: white;
+    background-color: var(--jet);
     align-items: center;
     flex-direction: column;
     padding-top: 0;
     padding-bottom: 4rem;
+    color: white;
 }
 
 .comment-wall {
     padding-left: 1rem;
-    margin-left: 1px;
-    border-left: 1px solid white;
+    margin-left: 2px;
+    border-left: 2px solid white;
 }
 
 .comment-wall-max {
     padding-left: 0;
+}
+
+.comment-wrapper {
+    margin: 1rem 0;
+    background: var(--jet);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 2px solid var(--grey)
+}
+.comment-toggle:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+}
+.comment-toggle {
+    color: white;
+    font-size: 0.75rem;
 }

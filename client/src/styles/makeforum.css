@@ -1,16 +1,16 @@
 .make-forum-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    height:3rem;
-    width:60%;
+    width: 800px;
+    gap: 1rem;
 }
 
 .make-forum-input {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height:100%;
+    height: 3rem;
     width:100%;
 }
 

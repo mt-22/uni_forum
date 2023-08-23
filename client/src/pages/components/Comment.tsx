@@ -4,6 +4,8 @@ import httpClient, { hostURL } from '../../httpClient'
 import { BlankPost } from '../../types'
 import MakeComment from './MakeComment'
 import '../../styles/postpage.css'
+import { Button } from 'react-bootstrap'
+import { ReactComponent as UpArrow } from '../../media/up_arrow.svg'
 
 const Comment:React.FC<{commentInfo:any}> = ({commentInfo}) => {
     const [show, setShow] = useState(false)
@@ -63,10 +65,15 @@ const Comment:React.FC<{commentInfo:any}> = ({commentInfo}) => {
             <>{commentInfo.media_link && <img className='post-image' src={commentInfo.media_link}/>}</>
         </div>
         <div className='post-like-wrapper'>
+            <UpArrow
+            onClick={() => add_like()}
+            className={"like-arrow " + (isLiked ? "arrow-liked" : "arrow-unliked")}
+            />
             <p className="post-likes">Likes: {likeCount}</p>
-            <button className="post-like-btn" onClick={() => add_like()}>Like</button>
+            {/* <button className="post-like-btn" onClick={() => add_like()}>Like</button> */}
         </div>
-        <button onClick={() => setShow(!show)}>Comment</button>
+        {/* <Button className="red-btn" onClick={() => setShow(!show)}>Comment</Button> */}
+        <a className="comment-toggle" onClick={() => setShow(!show)}>Reply</a>
         {show && <MakeComment func={updateComments} commentOn={commentInfo.id}/>}
         {commentInfo.index > 11? <div className='comment-wall-max'>{comment_wall}</div> : <div className='comment-wall'>{comment_wall}</div>}
         {/* <div className='post-like-wrapper'>

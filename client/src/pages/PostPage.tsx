@@ -39,7 +39,7 @@ const PostPage = () => {
 
     const comment_wall = (comments.length > 0) && comments.map((el:any) => {
         return (
-            <div key={el.id}>
+            <div className="comment-wrapper" key={el.id}>
                 <Comment commentInfo={el} />
             </div>
         )

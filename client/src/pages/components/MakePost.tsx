@@ -6,11 +6,13 @@ import '../../styles/makepost.css';
 import imageCompression from 'browser-image-compression';
 
 import { hostURL } from '../../httpClient';
+import { Button } from 'react-bootstrap';
 
 const MakePost:React.FC<{func:Function}> = ({func}) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [media, setMedia] = useState<File>();
+  const [fileName, setFileName] = useState("")
   const params = useParams();
   // console.log(posts)
 
@@ -26,7 +28,7 @@ const MakePost:React.FC<{func:Function}> = ({func}) => {
   const [isLoading, setLoading] = useState(false)
 
   const submitPost = async () => {
-    if (title.length > 0 && body.length > 0) {
+    if (title.length > 0 && body.length > 0 && body.length < 4000) {
         try {
            if (media) {
             const formData = new FormData();
@@ -42,10 +44,6 @@ const MakePost:React.FC<{func:Function}> = ({func}) => {
                     "media": resp.data.fileid
             }); 
             func(postresp.data)
-            setTitle("");
-            setBody("");
-            switchPostToggle(false);
-            setLoading(false)
           } else{
               setLoading(true)
               const resp = await httpClient.post(hostURL + 'makepost', {
@@ -55,11 +53,14 @@ const MakePost:React.FC<{func:Function}> = ({func}) => {
                 "university": params.university,
             });
             func(resp.data)
+            }
             setTitle("");
             setBody("");
             switchPostToggle(false);
-            setLoading(false)
-            }
+            setLoading(false);
+            setMedia(undefined);
+            setFileName('');
+
         } catch (error: any) {
             console.log(error)
         }
@@ -70,8 +71,8 @@ const MakePost:React.FC<{func:Function}> = ({func}) => {
     const ext = e.target.files[0].name.split('.').pop();
     const validext = ['jpg', 'jpeg', 'gif', 'png']
     for (let i=0; i <= validext.length; i++) {
-      if (ext === validext[i]) {
-        console.log(ext);
+      if (ext.toLowerCase() === validext[i]) {
+        setFileName(e.target.files[0].name)
         const compress = async() => {
           try {
             const compressed = await imageCompression(e.target.files[0], {maxSizeMB:0.1})
@@ -83,7 +84,7 @@ const MakePost:React.FC<{func:Function}> = ({func}) => {
         return;
       }
     }
-    console.log('wrong file type')
+    console.log('wrong file type', ext)
   }
   return (
     <div className='makepost'>
@@ -114,11 +115,12 @@ const MakePost:React.FC<{func:Function}> = ({func}) => {
                       />
                       Choose File
                     </label>
+                    <p>{fileName}</p>
 
-                {!isLoading? <button disabled={false} className="makepost-submit" type="button" onClick={() => submitPost()}>Submit</button>: <button disabled={true} className="makepost-submit" type="button">Submit</button>}
-                <button className="makepost-toggle" type="button" onClick={() => switchPostToggle(!postToggle)}>Hide</button>
+                {!isLoading? <Button disabled={false} className="red-btn makepost-submit" onClick={() => submitPost()}>Submit</Button>: <Button disabled={true} className="red-btn makepost-submit red-btn-disabled">Submit</Button>}
+                <Button className="red-btn makepost-toggle" onClick={() => switchPostToggle(!postToggle)}>Hide</Button>
               </div>
-              : <><button className="makepost-toggle" type="button" onClick={() => switchPostToggle(!postToggle)}>Show</button></> }
+              : <><Button className="red-btn makepost-toggle" onClick={() => switchPostToggle(!postToggle)}>Show</Button></> }
       </div>
     </div>
   )

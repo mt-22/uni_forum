@@ -60,7 +60,7 @@
     height: 30px;
     width: 60px;
     border-radius: 15px;
-    background-color: var(--jet);
+    background-color: var(--grey);
     position: relative;
 }
 
@@ -68,7 +68,7 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    background-color: var(--grey);
+    background-color: white;
     position: absolute;
     left: 0;
     transition: left 0.15s, background-color 0.2s;

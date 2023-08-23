@@ -7,6 +7,7 @@ import '../styles/forumpage.css'
 import MakePost from './components/MakePost';
 
 import { hostURL } from '../httpClient';
+import { Button } from 'react-bootstrap';
 
 
 //EXAMPLE OF CREATING A DYNAMIC ROUTES IN REACT
@@ -109,21 +110,25 @@ const ForumPage = () => {
                         <div className="forum-follow-wrapper">
                             <p>{followCount} Users</p>
                             {!isPublic && forum.user == userInfo.id && forum && <a className="pending-btn" href={`${forum.id}/pending`}>{pendingUsers} Pending</a>}
-                            {isPublic? <>{forum.user != userInfo.id && <button onClick={() => follow()}>{isFollowed? "Leave" : "Join"}</button>}</> :
-                            <>{forum.user != userInfo.id && <button onClick={() => follow()}>{pending? "Unrequest" : "Request"}</button>}</>}
+                            {isPublic? <>{forum.user != userInfo.id && <Button className="red-btn" onClick={() => follow()}>{isFollowed? "Leave" : "Join"}</Button>}</> :
+                            <>{forum.user != userInfo.id && <Button className="red-btn" onClick={() => follow()}>{pending? "Unrequest" : "Request"}</Button>}</>}
                         </div>
                     </div>
                     {forum && forum.user == userInfo.id && <>
-                    <label id='private-label'>Private{!isPublic ?
+                    <label id='private-label'>{!isPublic ? 
+                    <>
+                    Private
                     <div id="private-btn-wrapper" onClick={privateSwitch}>
                         <div className="private-btn-front private-btn-right"></div>
-                    </div>:
+                    </div></>:
+                    <>
+                    Public
                     <div id="private-btn-wrapper" onClick={privateSwitch}>
                         <div className="private-btn-front priate-btn-left"></div>
-                    </div>}</label>
+                    </div></>}</label>
                     </>}
                 </div>
-                {isFollowed? <>
+                {isFollowed || isPublic ? <>
                 <MakePost func={updatePosts}/>
                     <>
                         {post_wall}

@@ -4,6 +4,7 @@ import httpClient from "../httpClient"
 import ForumSearch from "./components/ForumSearch"
 import Header from "./components/Header"
 import SubForum from "./components/SubForum"
+import '../styles/searchpage.css'
 
 
 import { hostURL } from "../httpClient"
@@ -34,7 +35,7 @@ const SearchPage = () => {
 
     const post_wall = results.map((el: any) => {
         return (
-            <div key={el.id}>
+            <div key={el.id} className="search-forum-container">
                 <SubForum forumInfo={el}/>
             </div>
         )
@@ -43,7 +44,10 @@ const SearchPage = () => {
   return (
     <>
         <Header/>
-        <div>{[post_wall]}</div>
+            <div className="front-wrapper search-page-wrapper">
+            <h2 className="search-page-query-header">Subforums related to: "{params.query}"</h2>
+            <div className="search-page-forums">{[post_wall]}</div>
+        </div>
     </>
   )
 }

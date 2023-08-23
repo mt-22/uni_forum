@@ -179,8 +179,10 @@ def make_post():
 def make_comment():
     post_data = request.json
     post = Post.query.filter_by(id=post_data['comment_on']).first()
-    if post.index >= 25:
-        return jsonify({"error": "max comment recursion"})
+    if post.index >= 5:
+        # return jsonify({"error": "max comment recursion"})
+        comment_on = post.comment_on
+    else: comment_on = post_data['comment_on']
     try:
         media = request.json['media']
         pre_link = s3.generate_presigned_url(ClientMethod="get_object", Params={"Bucket": 'upost-content', "Key": media}, ExpiresIn=60)
@@ -193,7 +195,7 @@ def make_comment():
         return jsonify({"error": "Unauthenticated"})
     username = User.query.filter_by(id=user_id).first().username
     time_curr = datetime.now()
-    comment = Post(is_comment=True, comment_on=post_data['comment_on'], origin_id=post_data['origin_id'], user_id=username,
+    comment = Post(is_comment=True, comment_on=comment_on, origin_id=post_data['origin_id'], user_id=username,
              body=post_data['body'], time=time_curr, subforum=post_data['subforum'], university=post_data["university"], image_id=media, index=(post.index + 1))
     db.session.add(comment)
     db.session.commit()
@@ -336,11 +338,14 @@ def get_followed_forums():
     return resp
     
 
-@app.route("/homeposts", methods=["GET"])
+@app.route("/homeposts", methods=["POST"])
 def home_posts():
     user_id = request.cookies.get("user_id")
+    # post_count = request.json['post_count']
+    page = request.json['page']
     user = User.query.filter_by(id=user_id).first()
-    posts = Post.query.filter_by(university=user.university).filter(Post.subforum.like(any_(user.subforums))).filter_by(is_comment=False).order_by(Post.time).all()
+    # posts = Post.query.filter_by(university=user.university).filter(Post.subforum.like(any_(user.subforums))).filter_by(is_comment=False).order_by(desc(Post.time)).limit(post_count).all()
+    posts = Post.query.filter_by(university=user.university).filter(Post.subforum.like(any_(user.subforums))).filter_by(is_comment=False).order_by(desc(Post.time)).paginate(page=page, per_page=5)
     resp = []
     for post in posts:
         if user_id in post.likes:
@@ -350,8 +355,8 @@ def home_posts():
             pre_link = s3.generate_presigned_url(ClientMethod="get_object", Params={"Bucket": 'upost-content', "Key": post.image_id}, ExpiresIn=60)
         else: pre_link=None
         sub_name = SubForum.query.filter_by(id=post.subforum).first().title
-        resp.insert(0, {"id": post.id, "user": post.user_id, "title": post.title, "body": post.body, "media_link": pre_link,
-         "time": post.time, "likes": post.likes, 'liked':liked, "subforum":post.subforum, "sub_name": sub_name, "university": post.university})
+        resp.append({"id": post.id, "user": post.user_id, "title": post.title, "body": post.body, "media_link": pre_link,
+         "time": post.time, "likes": post.likes, 'liked':liked, "subforum":post.subforum, "sub_name": sub_name, "university": post.university, "page":page})
     return resp
 
 @app.route("/switchforumpublic", methods=['POST'])

@@ -81,19 +81,19 @@ label {
     font-family: "Heebo";
 }
 .nav-dropdown-btn:hover{
-    background-color: var(--red);
+    background-color: var(--jet);
     color: white;
 }
 .nav-dropdown-btn:focus-visible {
-    background-color: var(--darkred);
+    background-color: var(--grey);
 }
 :not(.btn-check).nav-dropdown-btn:active{
-    background-color: var(--darkerred);
+    background-color: var(--grey);
 }
 
 
 .show.nav-dropdown-btn {
-    background-color: var(--red);
+    background-color: var(--jet);
     color: white;
 }
 
@@ -101,6 +101,7 @@ label {
     height: 100%;
     width: fit-content;
     position: relative;
+    min-width: 6rem;
 }
 
 .nav-dropdown-list {
@@ -112,6 +113,7 @@ label {
     padding: 0.5rem 0;
     border-bottom: 1px solid rgba(0,0,0,0.4);
     border-left: 1px solid rgba(0,0,0,0.4);
+    text-align: center;
 }
 
 .dropdown-item {
@@ -126,7 +128,7 @@ label {
 }
 
 .dropdown-item:active {
-    background-color: var(--blue);
+    background-color: var(--grey);
     color: white;
 }
 
@@ -184,17 +186,17 @@ ul {
 .search-input:focus::placeholder {color:white}
 
 .search-input:focus {
-    background-color: var(--red);
+    background-color: var(--jet);
     color: white;
     transition: background-color 0.25s;
 }
 .search-input:hover {
-    background-color: var(--red);
+    background-color: var(--jet);
     color: white;
     transition: background-color 0.25s;
 }
 .search-input:active {
-    background-color: var(--darkerred);
+    background-color: var(--grey);
     color: white;
     transition: background-color 0.25s;
 }
