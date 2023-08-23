@@ -109,11 +109,12 @@ def get_current_user():
 @app.route("/userdata", methods=["POST"])
 def get_data():
     query = request.json['username'].lower()
+    page = request.json['page']
     user = User.query.filter_by(username=query).first()
     if user is None:
         return jsonify({"error": "User Not Found"}), 404
     user_id = request.cookies.get('user_id')
-    posts = db.session.query(Post, SubForum).join(SubForum).filter(Post.user_id==query).filter(SubForum.is_public==True).filter(Post.is_comment==False).all()
+    posts = db.session.query(Post, SubForum).join(SubForum).filter(Post.user_id==query).filter(SubForum.is_public==True).filter(Post.is_comment==False).order_by(desc(Post.time)).paginate(page=page, per_page=15)
     resp = []
     for post, sub in posts:
         if user_id in post.likes:
@@ -122,7 +123,7 @@ def get_data():
         if post.image_id is not None:
             pre_link = s3.generate_presigned_url(ClientMethod="get_object", Params={"Bucket": 'upost-content', "Key": post.image_id}, ExpiresIn=60)
         else: pre_link=None
-        resp.insert(0, {"id": post.id, "user": post.user_id, "title": post.title, "body": post.body, "media_link": pre_link, "media_id": post.image_id, "time": post.time,
+        resp.append({"id": post.id, "user": post.user_id, "title": post.title, "body": post.body, "media_link": pre_link, "media_id": post.image_id, "time": post.time,
             "likes": post.likes, 'liked':liked, "subforum":post.subforum, "sub_name": sub.title, "university": post.university})
     #return jsonify({'posts': resp})
     # return resp
@@ -267,10 +268,11 @@ def post_like():
 def get_posts():
     #quant = request.json['quantity']
     #start = request.json['start']
+    page = request.json['page']
     subforum = request.json['subforum']
     uni = request.json['university']
     user_id = request.cookies.get('user_id')
-    posts = Post.query.filter_by(subforum=subforum).filter_by(university=uni).filter_by(is_comment=False).all()
+    posts = Post.query.filter_by(subforum=subforum).filter_by(university=uni).filter_by(is_comment=False).order_by(desc(Post.time)).paginate(page=page, per_page=15)
     sub_name = SubForum.query.filter_by(id=subforum).first().title
     resp = []
     for post in posts:
@@ -280,7 +282,7 @@ def get_posts():
         if post.image_id is not None:
             pre_link = s3.generate_presigned_url(ClientMethod="get_object", Params={"Bucket": 'upost-content', "Key": post.image_id}, ExpiresIn=60)
         else: pre_link=None
-        resp.insert(0, {"id": post.id, "user": post.user_id, "title": post.title, "body": post.body, "media_link": pre_link, "media_id": post.image_id, "time": post.time,
+        resp.append({"id": post.id, "user": post.user_id, "title": post.title, "body": post.body, "media_link": pre_link, "media_id": post.image_id, "time": post.time,
             "likes": post.likes, 'liked':liked, "subforum":post.subforum, "sub_name": sub_name, "university": post.university})
     #return jsonify({'posts': resp})
     return resp
@@ -345,7 +347,7 @@ def home_posts():
     page = request.json['page']
     user = User.query.filter_by(id=user_id).first()
     # posts = Post.query.filter_by(university=user.university).filter(Post.subforum.like(any_(user.subforums))).filter_by(is_comment=False).order_by(desc(Post.time)).limit(post_count).all()
-    posts = Post.query.filter_by(university=user.university).filter(Post.subforum.like(any_(user.subforums))).filter_by(is_comment=False).order_by(desc(Post.time)).paginate(page=page, per_page=5)
+    posts = Post.query.filter_by(university=user.university).filter(Post.subforum.like(any_(user.subforums))).filter_by(is_comment=False).order_by(desc(Post.time)).paginate(page=page, per_page=15)
     resp = []
     for post in posts:
         if user_id in post.likes:

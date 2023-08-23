@@ -61,7 +61,7 @@ const HomePage = () => {
             )
         })
         return (
-            <div className='post-wall-page' key={el.page}>
+            <div className='post-wall-page'>
                 {post_wall}
             </div>
         )

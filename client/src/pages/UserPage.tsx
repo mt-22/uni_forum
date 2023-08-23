@@ -12,15 +12,18 @@ const UserPage = () => {
     const [user, setUser] = useState(Object)
     const [posts, setPosts] = useState(Array)
     const [isLoading, setLoading] = useState(Boolean)
+    const [curPage, setCurPage] = useState(1)
+    const [pages, setPages] = useState(Array);
     useEffect(() => {
         const fetch = async() => {
             try {
                 setLoading(true)
                 const resp = await httpClient.post(hostURL + "userdata", {
-                    "username": params.username
+                    "username": params.username,
+                    "page": curPage
                 });
                 setUser(resp.data)
-                setPosts(resp.data.posts)
+                setPages([...pages, resp.data.posts])
                 setLoading(false)
             }
             catch (error:any) {
@@ -28,15 +31,23 @@ const UserPage = () => {
             }
         }
         fetch();
-    }, []);
+    }, [curPage]);
 
-    const post_wall = (posts.length > 0) && posts.map((el: any) => {
+    const page_wall = pages.map((el: any) => {
+        const post_wall = el.map((po: any) => {
+            return (
+                <article className='post' key={po.id}>
+                    <Post postInfo={po}/>
+                </article>
+            )
+        })
         return (
-            <article className="post" key={el.id}>
-                <Post postInfo={el}/>
-            </article>
+            <div className='post-wall-page'>
+                {post_wall}
+            </div>
         )
     })
+    
   return (
     // <div>
     //     <Header/>
@@ -47,13 +58,14 @@ const UserPage = () => {
     <div className='page'>
     <Header />
     <div className='front-wrapper post-page-wrapper forum-page'>
-        {!isLoading && 
+        {(!isLoading || pages.length > 0) && 
         <>
             <div className='user-info'>
                 <h1>{user.username}</h1>
                 <p>{user.university}</p>
             </div>
-            {post_wall}
+            {page_wall}
+            <button onClick={() => setCurPage(curPage+1)}>Load More</button>
         </>}
         </div>
     </div>

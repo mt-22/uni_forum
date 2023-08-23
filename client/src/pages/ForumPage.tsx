@@ -25,6 +25,8 @@ const ForumPage = () => {
     const [isPublic, switchPublic] = useState(Boolean)
     const [pending, setPending] = useState(Boolean)
     const [pendingUsers, setPendingUsers] = useState(Number)
+    const [curPage, setCurPage] = useState(1)
+    const [pages, setPages] = useState(Array);
     useEffect(() => {
         const get_me = async () => {
             try {
@@ -50,22 +52,30 @@ const ForumPage = () => {
                 const resp = await httpClient.post(hostURL + 'getposts', {
                     //"quantity": 20,
                     //"start": 0,
+                    "page": curPage,
                     "subforum": params.subforum,
                     "university": params.university
                 });
-                setPosts(resp.data);
+                setPages([...pages, resp.data])
             } catch (error) {console.log(error)}
         };
         fetch();
         get_me();
-    }, []);
+    }, [curPage]);
     
 
-    const post_wall = (posts.length > 0) && posts.map((el: any) => {
+    const page_wall = pages.map((el: any) => {
+        const post_wall = el.map((po: any) => {
+            return (
+                <article className='post' key={po.id}>
+                    <Post postInfo={po}/>
+                </article>
+            )
+        })
         return (
-            <article className="post" key={el.id}>
-                <Post postInfo={el}/>
-            </article>
+            <div className='post-wall-page'>
+                {post_wall}
+            </div>
         )
     })
 
@@ -103,7 +113,7 @@ const ForumPage = () => {
         <div className='page'>
         <Header />
         <div className='front-wrapper post-page-wrapper forum-page'>
-            {!isLoading? <>
+            {(!isLoading || pages.length > 0)? <>
                 <div className="forum-page-info">
                     <div className='forum-name-users'>
                         <h1 className='forum-name'>{params.university}/{forum.title}</h1>
@@ -131,7 +141,8 @@ const ForumPage = () => {
                 {isFollowed || isPublic ? <>
                 <MakePost func={updatePosts}/>
                     <>
-                        {post_wall}
+                        {page_wall}
+                        <button onClick={() => setCurPage(curPage+1)}>Load More</button>
                     </>
                 </>:
                 <h1>This is a private forum</h1>}
